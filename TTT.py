@@ -14,14 +14,19 @@ class Tic(QWidget):
         self.setGeometry(700,100,600,600)
         self.setWindowTitle('Icon')
         self.setWindowIcon(QIcon('user.png'))
-        self.key_button()
+        # self.key_button()
+        self.button_9()
         self.quit_button()
         self.show()
+    
+    def button_9(self):
+        for i in range(9):
+            self.key_button(10+i*10,20+i*20)
      
-    def key_button(self):
+    def key_button(self,h,v):
         self.button = QPushButton('BTN', self)
         self.button.resize(60, 60)
-        self.button.move(25, 15)
+        self.button.move(h, v)
         self.button.clicked.connect(self.cliked_button)
 
     def quit_button(self):
