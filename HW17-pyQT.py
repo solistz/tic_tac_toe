@@ -17,8 +17,10 @@ class Tic(QWidget):
             8,
             9,
         ]
-        self.width_window = 600.6
+        self.width_window = 600
         self.height_window = 600
+        # self.width_resize_button = int(round(self.width()/3))
+        # self.height_resize_button = int(round(self.height()/3))
        
         self.initUI()
 
@@ -28,28 +30,38 @@ class Tic(QWidget):
         self.setWindowTitle('}{PECTIKI')
         self.setWindowIcon(QIcon('user.png'))
         self.key_button()
+        self.key_9()
         
         self.show()
 
+    def key_9(self):
+        for iter in range(len(self.button_arr)):
+            print(iter)
+
+            # # if i >= 3 & i <=5:
+            #     self.button_arr[i] = self.key_button(100+i*20,200+i*20)
+            # if i >= 6:
+            #     self.button_arr[i] = self.key_button(100+i*20,200+i*20)
+
+            # print(self.button_arr[i])
 
 # Кніпочка
     def key_button(self):
         self.button_0 = QPushButton('BTN', self)
-        # self.button.resize(self.w, self.h)
-        # self.button_0.resize(200,100)
         self.resize_key_button()
         print('Button',self.width())
 
+# Метод зміни розміру і координат
     def resize_key_button(self):
-        w_r = int(round(self.width()/5))
-        h_r = int(round(self.height()/3))
-        w_m = int(round((self.width()/2)-(w_r/2)))
-        h_m = int(round((self.height()/2)-(h_r/2)))
+        self.width_resize_button = int(round(self.width()/3))
+        self.height_resize_button = int(round(self.height()/3))
+        w_m = int(round(self.width() - (self.width_resize_button*1)))
+        h_m = int(round(self.height() - (self.height_resize_button*1)))
 
-        self.button_0.resize(w_r,h_r)
+        self.button_0.resize(self.width_resize_button,self.height_resize_button)
         self.button_0.move(w_m, h_m)
 
-# метод вказує розмір вікна
+# метод вказує розмір вікна при зміні онлайн
     def resizeEvent(self, event):
         print('test', self.height(), self.width())
         self.resize_key_button()
