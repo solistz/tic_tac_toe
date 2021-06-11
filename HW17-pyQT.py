@@ -7,20 +7,26 @@ class Tic(QWidget):
     def __init__(self):
         super().__init__()
         self.button_arr = [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
         ]
         self.width_window = 600
         self.height_window = 600
         # self.width_resize_button = int(round(self.width()/3))
         # self.height_resize_button = int(round(self.height()/3))
+        self.coord_x = 0
+        self.coord_y = 0
+        self.XO = 'test'
+        self.XX = 'X'
+        self.OO = '0'
+
        
         self.initUI()
 
@@ -29,42 +35,64 @@ class Tic(QWidget):
         self.setGeometry(700,100,self.width_window,self.height_window)
         self.setWindowTitle('}{PECTIKI')
         self.setWindowIcon(QIcon('user.png'))
-        self.key_button()
+#        self.key_button()
         self.key_9()
         
         self.show()
+    
+    def button_clicked(self):
+	    print("clicked", self.XO)
+        self.XO = self.XX
+        print(self.XO)
 
-    def key_9(self):
-        for iter in range(len(self.button_arr)):
-            print(iter)
 
-            # # if i >= 3 & i <=5:
-            #     self.button_arr[i] = self.key_button(100+i*20,200+i*20)
-            # if i >= 6:
-            #     self.button_arr[i] = self.key_button(100+i*20,200+i*20)
 
-            # print(self.button_arr[i])
 
 # Кніпочка
     def key_button(self):
-        self.button_0 = QPushButton('BTN', self)
+        self.button_0 = QPushButton(self.XO, self)
         self.resize_key_button()
-        print('Button',self.width())
+        self.move_key_button()
+        self.button_0.clicked.connect(self.button_clicked)
 
 # Метод зміни розміру і координат
     def resize_key_button(self):
         self.width_resize_button = int(round(self.width()/3))
         self.height_resize_button = int(round(self.height()/3))
-        w_m = int(round(self.width() - (self.width_resize_button*1)))
-        h_m = int(round(self.height() - (self.height_resize_button*1)))
-
         self.button_0.resize(self.width_resize_button,self.height_resize_button)
+
+    def move_key_button(self):
+        w_m = int(round(self.width() - (self.width_resize_button*self.coord_x)))
+        h_m = int(round(self.height() - (self.height_resize_button*self.coord_y)))
         self.button_0.move(w_m, h_m)
 
+    
+
+    def key_9(self):
+        for iter in range(len(self.button_arr)):
+            print(iter)
+            if iter <= 2:
+                self.coord_x = iter+1
+                self.coord_y = 1
+                self.key_button()
+            if iter >= 3 & iter <=5:
+                self.coord_x = iter-3
+                self.coord_y = 2
+                self.key_button()
+            if iter >= 6:
+                self.coord_x = iter-5
+                self.coord_y = 3
+                self.key_button()
+
+            # if iter >= 6:
+            #     self.button_arr[i] = self.key_button(100+i*20,200+i*20)
+
+            # print(self.button_arr[i])
 # метод вказує розмір вікна при зміні онлайн
     def resizeEvent(self, event):
         print('test', self.height(), self.width())
         self.resize_key_button()
+        self.move_key_button()
         return super(Tic, self).resizeEvent(event)
 
 # # Кніпочка - Вихід
